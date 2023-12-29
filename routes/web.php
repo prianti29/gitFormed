@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RepositoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,5 +21,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+Route::get('/addrepo', [RepositoryController::class, 'index'])->middleware(['auth'])->name('post.index');
+Route::get('/addrepo/create', [RepositoryController::class, 'create'])->middleware(['auth']);
+Route::post('/addrepo', [RepositoryController::class, 'store'])->middleware(['auth']);
+Route::get('/addrepo/{id}/edit', [RepositoryController::class, 'edit'])->middleware(['auth']);
+Route::put('/addrepo/{id}', [RepositoryController::class, 'update'])->middleware(['auth']);
+Route::delete('/addrepo/{id}', [RepositoryController::class, 'destroy'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
