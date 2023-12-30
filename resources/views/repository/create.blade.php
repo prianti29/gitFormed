@@ -19,7 +19,7 @@
         @csrf
       
         <div class="form-group">
-            <label for="repository_name" class="form-label">Repository_name:</label>
+            <label for="repository_name" class="form-label">Repository name:</label>
             <input type="text" class="form-control" id="repository_name" placeholder="Enter Repository Name" name="repository_name">
         </div>
         <div class="form-group">

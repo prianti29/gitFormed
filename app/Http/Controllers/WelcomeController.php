@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Repository;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class RepositoryController extends Controller
+class WelcomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,7 @@ class RepositoryController extends Controller
      */
     public function index(Request $request)
     {
-        $user_id = Auth::id();
-        $query = Repository::with('user')->where('user_id', $user_id);
+        $query = Repository::with('user');
         $sort = $request->input('sort');
         if ($sort == 'latest') {
             $repository_list = $query->orderBy('created_at', 'desc')->paginate(10);
@@ -28,8 +25,10 @@ class RepositoryController extends Controller
             $repository_list = $query->orderBy('repository_name')->paginate(10);
         }
         $data['repository_list'] = $repository_list;
-        return view('repository.index', $data);
+        // $data['repository_list'] = Repository::with('user')->paginate(10);
+        return view('Allrepo', $data);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,8 +36,7 @@ class RepositoryController extends Controller
      */
     public function create()
     {
-        $data["user_list"] = User::get();
-        return view('repository.create');
+        //
     }
 
     /**
@@ -49,16 +47,7 @@ class RepositoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'repository_name' => 'unique:repositories,repository_name|required|min:5|max:10|regex:/^[a-zA-Z0-9]+$/u',
-        ]);
-        $repo = new Repository();
-        $repo->repository_name = $request->repository_name;
-        // $repo->number_of_watcher = $request->number_of_watcher;
-        $repo->user_id = Auth::id();
-        $repo->created_at = Carbon::now();
-        $repo->save();
-        return redirect('/addrepo');
+        //
     }
 
     /**
@@ -80,14 +69,7 @@ class RepositoryController extends Controller
      */
     public function edit($id)
     {
-
-        $repo = Repository::find($id);
-        if (!$repo) {
-            return redirect("/addrepo");
-        }
-        $data["repo"] = $repo;
-        $data["user_list"] = User::get();
-        return view('repository.edit', $data);
+        //
     }
 
     /**
@@ -99,18 +81,7 @@ class RepositoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'repository_name' => 'unique:repositories,repository_name|required|min:5|max:10|regex:/^[a-zA-Z0-9]+$/u',
-        ]);
-        $repo = Repository::find($id);
-        if (!$repo) {
-            return redirect("/addrepo");
-        }
-        $repo->repository_name = $request->repository_name;
-        // $repo->number_of_watcher = $request->number_of_watcher;
-        $repo->user_id = Auth::id();;
-        $repo->save();
-        return redirect("/addrepo");
+        //
     }
 
     /**
@@ -121,11 +92,6 @@ class RepositoryController extends Controller
      */
     public function destroy($id)
     {
-        $repo = Repository::find($id);
-        if (!$repo) {
-            return redirect("/addrepo");
-        }
-        $repo->delete();
-        return redirect("/addrepo");
+        //
     }
 }

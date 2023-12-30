@@ -230,3 +230,20 @@
     margin: 0;
     padding: 10px;
 }
+
+ /* styling for the sorting menu */
+ .sorting-menu {
+    margin-bottom: 15px;
+}
+.sorting-menu span {
+    margin-right: 10px;
+}
+.nav-pills .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.nav-pills .nav-link.active {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff;
+}
