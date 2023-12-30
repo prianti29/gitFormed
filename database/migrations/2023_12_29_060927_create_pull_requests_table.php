@@ -16,12 +16,11 @@ class CreatePullRequestsTable extends Migration
         Schema::create('pull_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('repository_id')->references('id')
-            ->on('repositories');
+            ->on('repositories')->onDelete('cascade');
             $table->string('title');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

@@ -15,7 +15,7 @@
                 value="{{ $repo->repository_name }}" name="repository_name">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-update">Update Post</button>
+            <button type="submit" class="btn btn-success btn-update">Update Repository</button>
         </div>
     </form>
 </div>

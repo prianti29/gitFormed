@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PullRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\WelcomeController;
@@ -23,11 +24,16 @@ Route::get('/allrepo', [WelcomeController::class, 'index']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-Route::get('/addrepo', [RepositoryController::class, 'index'])->middleware(['auth'])->name('post.index');
-Route::get('/addrepo/create', [RepositoryController::class, 'create'])->middleware(['auth']);
-Route::post('/addrepo', [RepositoryController::class, 'store'])->middleware(['auth']);
-Route::get('/addrepo/{id}/edit', [RepositoryController::class, 'edit'])->middleware(['auth']);
-Route::put('/addrepo/{id}', [RepositoryController::class, 'update'])->middleware(['auth']);
-Route::delete('/addrepo/{id}', [RepositoryController::class, 'destroy'])->middleware(['auth']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/addrepo', RepositoryController::class)->only([
+        'index', 'create', 'store', 'edit', 'update', 'destroy'
+    ]);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/add-pull-req', PullRequestController::class)->only([
+        'index', 'create', 'store', 'edit', 'update', 'destroy'
+    ]);
+});
 
 require __DIR__.'/auth.php';

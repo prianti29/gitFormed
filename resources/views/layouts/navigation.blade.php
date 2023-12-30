@@ -14,7 +14,7 @@
                     <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ url('/allrepo') }}">All Repositories</a></li>
                     <li><a href="{{ url('/addrepo') }}">My Repositories</a></li>
-                    <li><a href="{{ url('/') }}">Pull Request</a></li>
+                    <li><a href="{{ url('/add-pull-req') }}">Pull Request</a></li>
                 @else
                     <li><a href="{{ url('/allrepo') }}">Repositories</a></li>
                 @endif
