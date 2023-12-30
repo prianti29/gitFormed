@@ -9,10 +9,10 @@
         <span>Sort by:</span>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link {{ request('sort') == 'alphabetical' ? 'active' : '' }}" href="{{ url('/addrepo?sort=alphabetical') }}">Alphabetical</a>
+                <a class="nav-link {{ request('sort') == 'alphabetical' ? 'active' : '' }}" href="{{ url('/addrepo?sort=alphabetical') }}">Alphabetical |</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request('sort') == 'latest' ? 'active' : '' }}" href="{{ url('/addrepo?sort=latest') }}">Latest</a>
+                <a class="nav-link {{ request('sort') == 'latest' ? 'active' : '' }}" href="{{ url('/addrepo?sort=latest') }}">Latest |</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request('sort') == 'watchers' ? 'active' : '' }}" href="{{ url('/addrepo?sort=watchers') }}">Number of Watchers</a>
@@ -26,6 +26,7 @@
             <th>Number of Watcher</th>
             <th>Created at</th>
             <th>Action</th>
+            
         </tr>
         @foreach($repository_list as $item) 
         <tr>
@@ -42,6 +43,7 @@
                     @method('delete')
                     <input type="submit" value="Delete" class="btn btn-danger btn-sm action-btn" >
                 </form>
+                <a href="{{ url("/pull-req/$item->id") }}" class="btn btn-success btn-sm action-btn" >Pull Request</a>
             </td>
         </tr>
         @endforeach 

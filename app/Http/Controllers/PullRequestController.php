@@ -17,9 +17,9 @@ class PullRequestController extends Controller
     public function index(Request $request)
     {
         $data['pull_list'] = PullRequest::with('repository')->paginate(10);
+        //dd($data);
         return view('pullRequest.index', $data);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -96,7 +96,6 @@ class PullRequestController extends Controller
         $pull->save();
         return redirect("/add-pull-req");
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -111,5 +110,13 @@ class PullRequestController extends Controller
         }
         $pull->delete();
         return redirect("/add-pull-req");
+    }
+    public function getPullRequestByRepository($repository_id){
+        if ($repository_id) {
+            $pull_list = PullRequest::where('repository_id', $repository_id)->paginate(10); 
+        } else {
+            $pull_list = PullRequest::paginate(10); 
+        }
+        return view('pullRequest.index', compact('pull_list'));
     }
 }

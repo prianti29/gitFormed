@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/allrepo', [WelcomeController::class, 'index']);
+Route::get('/pull-req/{id}', [PullRequestController::class, 'getPullRequestByRepository']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
