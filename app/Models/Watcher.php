@@ -12,5 +12,6 @@ class Watcher extends Model
     {
         return $this->belongsTo(Repository::class, 'repository_id');
     }
+    protected $fillable = ['user_id', 'repository_id'];
     
 }

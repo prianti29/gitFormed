@@ -4,6 +4,7 @@ use App\Http\Controllers\PullRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\WatcherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +37,8 @@ Route::middleware(['auth'])->group(function () {
         'index', 'create', 'store', 'edit', 'update', 'destroy'
     ]);
 });
+
+Route::post('/watcher/update', [WatcherController::class, 'updateWatchers']);
+
 
 require __DIR__.'/auth.php';
