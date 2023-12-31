@@ -1,10 +1,8 @@
 @extends('layouts.app')
-
 @section('contents')
 <div class="repo-form-container">
     <h3 class="repo-form-title">Add New Pull Request</h3>
     <hr class="divider">
-
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -14,7 +12,6 @@
         </ul>
     </div>
     @endif
-
     <form class="repo-form" action="{{ url('/add-pull-req') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">

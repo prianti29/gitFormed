@@ -17,7 +17,6 @@ class PullRequestController extends Controller
     public function index(Request $request)
     {
         $data['pull_list'] = PullRequest::with('repository')->paginate(10);
-        //dd($data);
         return view('pullRequest.index', $data);
     }
     /**
@@ -27,7 +26,6 @@ class PullRequestController extends Controller
      */
     public function create()
     {
-        // $data["repo_list"] = Repository::get();
         $data["repo_list"] = Repository::pluck('repository_name', 'id');
         return view('pullRequest.create', $data);
     }
@@ -43,7 +41,6 @@ class PullRequestController extends Controller
         $pull = new PullRequest();
         $pull->title = $request->title;
         $pull->repository_id = $request->repository_id;
-        // $pull->repository_id = $request->input('repository_id');
         $pull->created_at = Carbon::now();
         $pull->save();
         return redirect('/add-pull-req');

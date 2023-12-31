@@ -22,7 +22,7 @@
 
             <ul class="nav navbar-nav navbar-right" style="margin-top: 10px;">
                 @if (Auth::check())
-                    <li>
+                    <li style="margin-top: -10px">
                         <form action="{{ route('logout') }}" method="POST" class="logout-form">
                             @csrf
                             <button type="submit" class="btn btn-link logout-btn"><span
@@ -39,3 +39,16 @@
         </div>
     </div>
 </nav>
+<script>
+    $(document).ready(function () {
+        // Get the current URL
+        var currentUrl = "{{ url()->current() }}";
+
+        // Add 'active' class to the corresponding menu item
+        $('.custom-navbar .nav > li > a').each(function () {
+            if ($(this).attr('href') == currentUrl) {
+                $(this).parent().addClass('active');
+            }
+        });
+    });
+</script>

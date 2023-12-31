@@ -17,6 +17,10 @@ class Repository extends Model
     {
         return $this->hasMany(PullRequest::class);
     }
+    public function watchers()
+    {
+        return $this->hasMany(Watcher::class, 'repository_id');
+    }
     protected $fillable = [
         'repository_name',
         'user_id',

@@ -12,6 +12,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
+<style>
+.custom-navbar .nav > li.active > a {
+    background-color: #337ab7;
+    color: #fff;
+}
+</style>
 <body>
     @include('layouts.navigation')
     <div class="container">

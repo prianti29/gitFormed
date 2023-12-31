@@ -4,23 +4,6 @@
 <div class="repo-list-container">
     <a href="{{ url('/add-pull-req/create') }}" class="btn btn-success add-repo-btn">Add Pull Request</a>
     <hr class="divider">
-
-    {{-- <form action="{{ url('/pull-requests/filter') }}" method="GET">
-    <div class="sort-container">
-        <label for="repository_id">Filter by Repository:</label>
-        <select name="repository_id" id="repository_id" class="form-control" style="width:20%"
-            onchange="this.form.submit()">
-            <option value="">-- Select a Repository --</option>
-            @foreach ($repo_list as $id => $name)
-            <option value="{{ $id }}" {{ request('repository_id') == $id ? 'selected' : '' }}>
-                {{ $name }}
-            </option>
-            @endforeach
-        </select>
-    </div>
-    </form>
-    <br>--}}
-
     <table class="table table-content">
         <tr>
             <th>Pull ID</th> 

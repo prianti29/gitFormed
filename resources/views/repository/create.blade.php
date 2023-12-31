@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('contents')
 <div class="repo-form-container">
     <h3 class="repo-form-title">Add New Repository</h3>
@@ -17,7 +16,6 @@
 
     <form class="repo-form" action="{{ url('/addrepo') }}" method="POST" enctype="multipart/form-data">
         @csrf
-      
         <div class="form-group">
             <label for="repository_name" class="form-label">Repository name:</label>
             <input type="text" class="form-control" id="repository_name" placeholder="Enter Repository Name" name="repository_name">

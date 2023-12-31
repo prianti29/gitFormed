@@ -23,7 +23,9 @@
     <tr>
         <th style="text-align: center;">User name</th>
         <th style="text-align: center;">Repository Name</th>
+        @if (Auth::check())
         <th style="text-align: center;">watch</th>
+        @endif
         <th style="text-align: center;">Number of watcher</th>
         <th style="text-align: center;">Created at</th>
     </tr>
@@ -32,14 +34,11 @@
     <tr>
         <td>{{ $item->user->name }}</td>
         <td>{{ $item->repository_name }}</td>
-        {{-- <td style="width:10px;">
-                    <input type="hidden" name="watcher_checkbox[{{ $item->id }}]" value="0">
-        <input type="checkbox" name="watcher_checkbox[{{ $item->id }}]" value="1"
-            {{ $item->is_watched ? 'checked' : '' }}>
-        </td> --}}
-        <td><input type="checkbox" name="watcher" class="watcherCheckbox " data-repository-id={{ $item->id }}
-                {{ $item->is_watching ? 'checked' : '' }}></td>
-        <td>{{ $item->number_of_watcher }}</td>
+        @if (Auth::check())
+            <td><input type="checkbox" name="watcher" class="watcherCheckbox " data-repository-id={{ $item->id }}
+                    {{ $item->is_watching ? 'checked' : '' }}></td>
+        @endif
+        <td>{{ $item->watchers_count }}</td>
         <td>{{ $item->created_at }}</td>
     </tr>
     @endforeach
@@ -47,33 +46,35 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.watcherCheckbox').forEach(function (checkbox) {
-            checkbox.addEventListener('change', function () {
-                let isChecked = this.checked;
-                let repositoryId = this.getAttribute('data-repository-id');
-                let url = "{{ url('watcher/update') }}";
-                let csrfToken = '{{ csrf_token() }}';
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                    body: JSON.stringify({
-                        repository_id: repositoryId,
-                        watcher: isChecked,
-                    }),
-                })
-                .then(response => {
+            checkbox.addEventListener('change', async function () {
+                try {
+                    let isChecked = this.checked;
+                    let repositoryId = this.getAttribute('data-repository-id');
+                    let url = "{{ url('watcher/update') }}";
+                    let csrfToken = '{{ csrf_token() }}';
+
+                    let response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                        },
+                        body: JSON.stringify({
+                            repository_id: repositoryId,
+                            watcher: isChecked,
+                        }),
+                    });
                     console.log(response);
-                    return response.json();
-                })
-                .then(data => console.log(data))
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                } catch (error) {
+                    console.error('Unexpected error:', error);
+                }
+                finally{
+                    window.location.reload();
+                }
             });
         });
     });
+
 </script>
 
 @endsection

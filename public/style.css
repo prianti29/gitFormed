@@ -68,11 +68,13 @@
 .action-container {
     display: flex;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .action-btn {
     flex-grow: 0;
-    /* width: 10px; */
 }
 /* create */
 .repo-form-container {

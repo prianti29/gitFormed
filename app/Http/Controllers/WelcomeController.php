@@ -15,6 +15,7 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     // public function index(Request $request)
     // {
     //     $query = Repository::with('user');
@@ -22,14 +23,20 @@ class WelcomeController extends Controller
     //     if ($sort == 'latest') {
     //         $repository_list = $query->orderBy('created_at', 'desc')->paginate(10);
     //     } elseif ($sort == 'watchers') {
-    //         $repository_list = $query->orderBy('number_of_watcher', 'desc')->paginate(10);
+    //         $repository_list = $query->withCount('watchers')->orderByDesc('watchers_count')->paginate(10);
     //     } else {
     //         $repository_list = $query->orderBy('repository_name')->paginate(10);
     //     }
+    //     $userId = Auth::id();
+    //     foreach ($repository_list as $repository) {
+    //         $repository->is_watching = Watcher::where('user_id', $userId)
+    //             ->where('repository_id', $repository->id)
+    //             ->exists();
+    //     }
     //     $data['repository_list'] = $repository_list;
-    //     // $data['repository_list'] = Repository::with('user')->paginate(10);
     //     return view('Allrepo', $data);
     // }
+
     public function index(Request $request)
     {
         $query = Repository::with('user');
@@ -43,6 +50,7 @@ class WelcomeController extends Controller
         }
         $userId = Auth::id();
         foreach ($repository_list as $repository) {
+            $repository->watchers_count = Watcher::where('repository_id', $repository->id)->count();
             $repository->is_watching = Watcher::where('user_id', $userId)
                 ->where('repository_id', $repository->id)
                 ->exists();
@@ -50,6 +58,7 @@ class WelcomeController extends Controller
         $data['repository_list'] = $repository_list;
         return view('Allrepo', $data);
     }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Repository;
 use App\Models\User;
+use App\Models\Watcher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,9 @@ class RepositoryController extends Controller
             $repository_list = $query->orderBy('number_of_watcher', 'desc')->paginate(10);
         } else {
             $repository_list = $query->orderBy('repository_name')->paginate(10);
+        }
+        foreach ($repository_list as $repository) {
+            $repository->watchers_count = Watcher::where('repository_id', $repository->id)->count();
         }
         $data['repository_list'] = $repository_list;
         return view('repository.index', $data);
@@ -54,7 +58,6 @@ class RepositoryController extends Controller
         ]);
         $repo = new Repository();
         $repo->repository_name = $request->repository_name;
-        // $repo->number_of_watcher = $request->number_of_watcher;
         $repo->user_id = Auth::id();
         $repo->created_at = Carbon::now();
         $repo->save();
@@ -107,7 +110,6 @@ class RepositoryController extends Controller
             return redirect("/addrepo");
         }
         $repo->repository_name = $request->repository_name;
-        // $repo->number_of_watcher = $request->number_of_watcher;
         $repo->user_id = Auth::id();;
         $repo->save();
         return redirect("/addrepo");
