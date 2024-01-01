@@ -201,20 +201,20 @@
 .logout-btn {
     color: #333;
 }
-
 .logout-btn:hover,
 .logout-btn:focus {
     color: #d9534f;
     text-decoration: none;
 }
-
 /* dashboard */
 .user-content {
+    margin-top: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    /* background-color: #fbf9f9; */
+    height: 100%;
 }
 
 .user-details {
