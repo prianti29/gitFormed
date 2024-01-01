@@ -6,14 +6,14 @@
     <hr class="divider">
     <table class="table table-content">
         <tr>
-            <th>Pull ID</th> 
-            <th>Title</th>
-            <th>Repository name</th>
-            <th>Created at</th>
-            <th>Action</th>
+            <th style="text-align: center;">Pull ID</th> 
+            <th style="text-align: center;">Title</th>
+            <th style="text-align: center;">Repository name</th>
+            <th style="text-align: center;">Created at</th>
+            <th style="text-align: center;">Action</th>
         </tr>
         @foreach($pull_list as $item)
-        <tr>
+        <tr style="text-align: center;">
             <td>{{ $item->id }}</td>
             <td>{{ $item->title }}</td>
             <td>{{ $item->repository->repository_name }}</td>
