@@ -33,17 +33,12 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:users,name'], // Specify the unique constraint on 'name'
+            'name' => ['required', 'string', 'max:255', 'unique:users,name'], 
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
-            'name.unique' => 'The User name has already been taken.', // Specify the custom message for the 'name' uniqueness constraint
+            'name.unique' => 'The User name has already been taken.', 
         ]);
 
         $user = User::create([
