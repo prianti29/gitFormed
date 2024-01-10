@@ -24,7 +24,7 @@ class RepositoryController extends Controller
         if ($sort == 'latest') {
             $repository_list = $query->orderBy('created_at', 'desc')->paginate(10);
         } elseif ($sort == 'watchers') {
-            $repository_list = $query->orderBy('number_of_watcher', 'desc')->paginate(10);
+            $repository_list = $query->withCount('watchers')->orderByDesc('watchers_count')->paginate(10);
         } else {
             $repository_list = $query->orderBy('repository_name')->paginate(10);
         }

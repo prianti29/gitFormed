@@ -12,8 +12,5 @@ class PullRequest extends Model
     {
         return $this->belongsTo(Repository::class, 'repository_id');
     }
-    //     public function getRepository()
-    // {
-    //     return $this->belongsTo(Repository::class, 'repository_id');
-    // }
+
 }

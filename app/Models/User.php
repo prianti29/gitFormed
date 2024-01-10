@@ -7,14 +7,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
     public function repositories(): HasMany
     {
         return $this->hasMany(Repository::class);
+    }
+
+    public function unreadNotificationsCount()
+    {
+        $user_id = Auth::id();
+        $count = Notification::where('is_read', false)->where('user_id', $user_id)->count();
+        return $count;
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 
     /**

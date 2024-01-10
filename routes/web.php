@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PullRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RepositoryController;
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         'index', 'create', 'store', 'edit', 'update', 'destroy'
     ]);
 });
+Route::get('/read-notifications', [NotificationController::class, 'readNotificationsAndUpdateReadStatus']);
 
 Route::post('/watcher/update', [WatcherController::class, 'updateWatchers']);
 

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\PullRequest;
 use App\Models\Repository;
+use App\Models\Watcher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PullRequestController extends Controller
 {
@@ -26,7 +29,8 @@ class PullRequestController extends Controller
      */
     public function create()
     {
-        $data["repo_list"] = Repository::pluck('repository_name', 'id');
+        $user_id = Auth::id();
+        $data["repo_list"] = Repository::where('user_id', $user_id)->pluck('repository_name', 'id');
         return view('pullRequest.create', $data);
     }
 
@@ -42,7 +46,17 @@ class PullRequestController extends Controller
         $pull->title = $request->title;
         $pull->repository_id = $request->repository_id;
         $pull->created_at = Carbon::now();
-        $pull->save();
+        $response = $pull->save();
+        if($response == true) {
+            $watchers = Watcher::where('repository_id', $request->repository_id)->get();
+            foreach ($watchers as $watcher) {
+                Notification::create([
+                    'user_id' => $watcher->user_id,
+                    'pull_request_id' => $pull->id,
+                ]);
+            }
+
+        }
         return redirect('/add-pull-req');
     }
 
@@ -108,11 +122,12 @@ class PullRequestController extends Controller
         $pull->delete();
         return redirect("/add-pull-req");
     }
-    public function getPullRequestByRepository($repository_id){
+    public function getPullRequestByRepository($repository_id)
+    {
         if ($repository_id) {
-            $pull_list = PullRequest::where('repository_id', $repository_id)->paginate(10); 
+            $pull_list = PullRequest::where('repository_id', $repository_id)->paginate(10);
         } else {
-            $pull_list = PullRequest::paginate(10); 
+            $pull_list = PullRequest::paginate(10);
         }
         return view('pullRequest.index', compact('pull_list'));
     }

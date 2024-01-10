@@ -29,6 +29,18 @@
                                     class="glyphicon glyphicon-log-out"></span> Logout</button>
                         </form>
                     </li>
+                    <li>
+                        <a href="{{ url('/read-notifications') }}" id="notification-icon">
+                            <span class="glyphicon glyphicon-bell"></span>
+                            @php
+                                $unreadNotificationsCount = Auth::user()->unreadNotificationsCount();
+                            @endphp
+                            @if ($unreadNotificationsCount > 0)
+                            <span id="unread-notification-count" class="badge badge-danger">{{ $unreadNotificationsCount }}</span>
+                            @endif
+ 
+                         </a>
+                    </li>
                 @else
                     <li><a href="{{ route('login') }}">Log in</a></li>
                     @if (Route::has('register'))
